@@ -1,6 +1,6 @@
 ---
-title: "Python Project : Search and Find Script"
-date: 2018-02-05
+title: "Python Project : SearchScript"
+date: 2018-05-02
 tags: [python, read file function, write file function]
 header:
 	"images/searchpy/hand.jpg"

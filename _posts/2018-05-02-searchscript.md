@@ -1,3 +1,4 @@
+---
 title: "Python Project : Search and Find Script"
 date: 2018-02-05
 tags: [python, read file function, write file function]
@@ -5,7 +6,7 @@ header:
 	"images/searchpy/hand.jpg"
 excerpt: "Python, Search and Find"
 mathjax: "true"
-----
+---
 
 # Welcome to Python Republic
 

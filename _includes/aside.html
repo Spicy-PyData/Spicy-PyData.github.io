@@ -9,6 +9,10 @@
     <div class="cover-text">
       <div class="heading">
 
+      
+
+       
+
         {% if page.tags %}
           {% for tag in page.tags %}
             <a href="{{ site.baseurl }}/posts/#{{ tag | downcase }}">{{ tag | downcase }}</a>
@@ -19,11 +23,24 @@
 
       </div>
 
-      <p>
+
+
+     <!-- <p>
         {% if page.summary %}
           {{ page.summary }}
         {% endif %}
-      </p>
+      </p>-->
+      <img class="profile" src="/assets/images/profile.png" alt="">
+      <div class="name">
+          <p>Uzoma Beneth Uzosike</p>
+      </div>
+      <div class="social">
+        <ul>
+          <li><a href="#" target="_blank"><i class="fab fa-linkedin fa-2x linkedin-color"></i></a></li>
+          <li><a href="#" target="_blank"><i class="fab fa-facebook fa-2x facebook-color"></i></a></li>
+        </ul>
+      </div>
+      
 
     </div>
 

@@ -1,0 +1,63 @@
+.profile{
+    width:110px;
+    height:150px;
+    border-radius: 50%;
+    border:2px solid white;
+    display: block;
+    margin:0 auto;  
+    margin-bottom:20px;
+}
+
+.linkedin-color{
+    color:#0077b5 !important;
+}
+
+.facebook-color{
+    color: #3b5998 !important;
+}
+
+.social ul{
+    display: flex;
+    justify-content: center;
+    padding:0 !important;
+}
+
+.social ul li{
+    float:left;
+    margin-right:5px;
+    margin-left:5px;
+   
+}
+
+.social ul li{
+    text-decoration: none;
+    list-style-type: none;
+    
+}
+
+.social ul li a:hover{
+   
+    color:blue !important;
+    animation: zoom 2s;
+}
+
+.name p{
+    font-size:23px;
+}
+
+
+@keyframes zoom{
+    0%{
+       margin:0px;
+    }
+
+    50%{
+        margin:25px;
+    }
+
+    100%{
+        margin:0px;
+    }
+
+}
+

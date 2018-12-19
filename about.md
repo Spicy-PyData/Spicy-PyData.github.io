@@ -22,6 +22,6 @@ Most of my time is spent on completing online data science courses.
 
 
 <h3>Curriculum Vitae</h3>
-My CV: [Show](../cv.pdf/)
+My CV: [Show](../cv.pdf)
 
 

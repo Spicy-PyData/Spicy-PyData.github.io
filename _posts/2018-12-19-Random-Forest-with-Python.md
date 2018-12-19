@@ -1,5 +1,5 @@
 ---
-bg: "tools.jpg"
+bg: "/randf/rf_post.jpg"
 layout: post
 title:  "RandomForest with Python"
 crawlertitle: "RandomForest"

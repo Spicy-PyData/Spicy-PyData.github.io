@@ -1078,7 +1078,7 @@ confusion_matrix(y_test,predictions)
 
 
 
-### CLEANING THE TEST DATA CSV FILE
+#### CLEANING THE TEST DATA CSV FILE
 
 
 ```python
@@ -1354,7 +1354,7 @@ test.head()
 </table>
 </div>
 
-#### TURNING THE TERMINAL STRINGS INTO DUMMIES
+##### TURNING THE TERMINAL STRINGS INTO DUMMIES
 
 ```python
 test['NewSex']=test['Sex'].apply(lambda x: 1 if x == 'male' else 0)

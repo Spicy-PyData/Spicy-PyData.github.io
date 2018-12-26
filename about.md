@@ -34,7 +34,7 @@ View presentation slides [HERE](https://www.slideshare.net/secret/dCEFtRRCr8H8Co
 [![jpg]({{ site.images | relative_url }}/skills/python.jpg)]({{ site.images.skills | relative_url }}/skills/python.jpg)
 
 - Machine Learning:
-[![JPG]({{ site.images | relative_url }}/skills/machine.JPG)]({{ site.images.skills | relative_url }}/skills/machine.JPG)
+[![png]({{ site.images | relative_url }}/skills/machine.png)]({{ site.images.skills | relative_url }}/skills/machine.png)
 
 - Data Visualizations Tools:
 [![png]({{ site.images | relative_url }}/skills/visuals.png)]({{ site.images.skills | relative_url }}/skills/visuals.png)

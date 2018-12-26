@@ -18,9 +18,9 @@ author: Uzoma Uzosike
 ```python
 %load_ext autoreload
 %autoreload 2
-
 %matplotlib inline
 ```
+***Import Necessary Python Libraries***
 
 ```python
 import pandas as pd
@@ -33,29 +33,22 @@ from IPython.display import display
 
 from sklearn import metrics
 ```
-
-# Data Importation and EDA
-
-
+***During Data import, the "saledate" column is parsed as a datetime object, because the column was recorded in a datetime format, the datetime format allows for easy manipulation of datetime object*** 
 ```python
 # Importing the data, and setting "saledate" column as datetime format
 df = pd.read_csv("../../data/mydata/Train.csv",low_memory=False,parse_dates=["saledate"])
 ```
-
-
+### Exploratory Data Analysis
+- ***Create a function **display_all()**  to display all columns avoiding hiding excess columns and ensuring a wholistic view of the data set***
 ```python
-# function to display all columns avoiding hiding excess columns
 def display_all(df):
     with pd.option_context("display.max_rows", 1000, "display.max_columns", 1000): 
         display(df)
 ```
-
-
+- ***A Look into the data using the **display_all()  and  df.head()** functions***.
 ```python
-display_all(df.head(3))
+ display_all(df.head(3))
 ```
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -302,12 +295,12 @@ display_all(df.head(3))
 </table>
 </div>
 
-
+- ***A function **df_summary(df)** that summarizes the data, providing the number of instances, features and data types for each cloumn/feature contained in the data***
 
 ```python
-
 def df_summary(df):
-    print ("There are {a} columns \nThere are {b} entries in this DataFrame".format(a=df.shape[1],b=df.shape[0]))
+    print ("There are {a} columns \nThere are {b} entries in this DataFrame"
+    .format(a=df.shape[1],b=df.shape[0]))
     cols= []
     typs= []
     for col,typ in zip(list(df.columns),list(df.dtypes)):
@@ -462,21 +455,15 @@ display_all(df_summary(df))
 </table>
 </div>
 
-
+- ***Converting the Target variable (SalePrice) into it's Logarithmic Values ensuring compatibility to evaluation requirements RSME***
 
 ```python
-# Convert the Target variable (SalePrice) into Log due to evaluation requirements RSME
 df["SalePrice"] = np.log(df["SalePrice"])
 ```
-
-
+- ***A look at the statistical illustration of the data***
 ```python
 df.describe(include="all")
 ```
-
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -836,24 +823,21 @@ df.describe(include="all")
 <p>13 rows × 53 columns</p>
 </div>
 
-
-
-
+#### Performing operations on the DateTime object column "saledate"
+Using **add_datepart** method from the **fastai** Library, We split the **"saledate"** column into seperate colums, specifiy a seperate new column for each element of datetime, like: **Year, Month, Day...**
+                      
 ```python
-# using the fastai add_datepart method, we create new columns for each element of the datetime column (saledate)
 add_datepart(df,"saledate")
 ```
 
-
+- Looking at the data summary once again shows that the number of features increased initially from **53 columns to 65**. 12 elements of date time were created as new columns
 ```python
 display_all(df_summary(df))
 ```
-
-    There are 65 columns 
-    There are 401125 entries in this DataFrame
-    
-
-
+```python
+There are 65 columns 
+There are 401125 entries in this DataFrame    
+```
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1012,27 +996,11 @@ display_all(df_summary(df))
 </table>
 </div>
 
-
-
+- ***Using the **train_cats()** from fastai, we convert the String Object Columns of the data into Categorical Variables***
 ```python
-# we change the String Object Columns to Categorical Variables
-# we use the fastai train_cats
-
 train_cats(df)
 ```
-
-
-```python
-# Check change in data type for 
-display_all(df_summary(df))
-
-```
-
-    There are 65 columns 
-    There are 401125 entries in this DataFrame
-    
-
-
+Notice the change in type of the column "UsageBand", from previously "object" into "category"
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1191,64 +1159,54 @@ display_all(df_summary(df))
 </table>
 </div>
 
-
-
+#### Handling Categorical Variables
+- ***A look into the categories contained in the  "UsageBand" column***
 ```python
-## Handling Categoric Variables
-# Changing into Categories
 df["UsageBand"].cat.categories
 ```
-
-
-
-
-    Index(['High', 'Low', 'Medium'], dtype='object')
-
-
-
+It can seen that there are 3 unique values
 
 ```python
-# Re-odering the values
-df.UsageBand.cat.set_categories(['High', 'Medium', 'Low'], ordered=True, inplace=True)# New order
-
+Index(['High', 'Low', 'Medium'], dtype='object')
 ```
+- ***Re-odering the Categoric Values***
+We place reorder the values stating the desired order of values 
 
-
+```python
+df.UsageBand.cat.set_categories(['High', 'Medium', 'Low'], ordered=True, inplace=True)
+```
+- ***Values are arranged in desired order***
 ```python
 df.UsageBand.cat.categories
 ```
+      Index(['High', 'Medium', 'Low'], dtype='object')
 
 
-
-
-    Index(['High', 'Medium', 'Low'], dtype='object')
-
-
-
+- ***Then we replace the String names of the category values, with coresponding categorical codes (1,2,3)***
 
 ```python
-### Then we replace the Names with their coresponding category values (1,2,3) 
 df["UsageBand"] = df["UsageBand"].cat.codes
 ```
 
 
 ```python
-df["UsageBand"].unique() # NOTE--- pandas uses -1 to signify missing values for Categorical Variables
+df["UsageBand"].unique()
 ```
 
+      array([ 2,  0,  1, -1], dtype=int64)
 
 
+**NOTE** Pandas Library uses *-1* to signify missing values in Categorical Variables. This is why we see *-1* shown as a value  
 
-    array([ 2,  0,  1, -1], dtype=int64)
+## Handling Missing Values in the Data
+1. **missing_col_count()** : Counts and Returns all columns containing Missing Values from the Dataset
 
+2. **report_missing ()** : Uses the missing_col_count() to print result of columns contain missing values
 
+3. **missing_values_summary()** : Gives a wholistic summary of missing values including a dataframe generated to show columns containing missing values, and the corresponding percentage of missing data per column
 
-# Handling Missing Values in the Data
-
-
+- **missing_col_count()**
 ```python
-# This function Counts and Returns all columns containing Missing Values from the Dataset
-
 def missing_col_count(df):
     missing = df.isnull().sum()/len(df)*100
     count = []
@@ -1259,8 +1217,7 @@ def missing_col_count(df):
         percentage.append(round(missing[col],2)) 
     return (len(count))
 ```
-
-
+- **report_missing ()**
 ```python
 def report_missing (df):
     m = missing_col_count(df)
@@ -1271,13 +1228,11 @@ def report_missing (df):
 ```python
 report_missing(df)
 ```
-
     39 of 65 Columns contain Missing Values in the Dataframe
     
-
+- **missing_values_summary()**
 
 ```python
-#This function Collates missing Variables, and Generates a Dataframe showing Missing Value Count and Percentage
 def missing_values_summary(df):
     try:
         # Total missing values
@@ -1313,11 +1268,8 @@ missing_values_summary(df)
 ```
 
     Your selected dataframe has 65 columns.
-     There are 39 columns that have missing values.
+    There are 39 columns that have missing values.
     
-
-
-
 
 <div>
 <style scoped>
@@ -1541,11 +1493,9 @@ missing_values_summary(df)
 </table>
 </div>
 
-
-
-
+### Ploting the Missing Values by the percentage per column
+- A dataframe that holds ***Column of Missing Value*** and ***Percentage of Missing Value*** for the corresponding column
 ```python
-### Ploting The Missing Values
 def plt_missing(df):
     mis_val_percent = 100 * df.isnull().sum() / len(df)
     mis_val = mis_val_percent[df.isnull().sum() > 0].round(2)
@@ -1554,7 +1504,10 @@ def plt_missing(df):
     vals = vals.rename(columns={0:'Percentages',"index":'Col_Name'})
     return vals
 ```
-
+- **Bar plot showing Percentage of Missing Value by for Columns of the Data where Missing values exist**
+  - Green: Signifies that below 25% of values are missing in the column
+  - Blue: Signifies that below 60% of values are missing in the column
+  - Red: Signifies that above 60% of values are missing in the column 
 
 ```python
 color = lambda x: "green" if x<=25 else("blue" if x<= 60 else "red")
@@ -1566,41 +1519,27 @@ plt.ylabel('Percentage (%)')
 plt.title('Percentage of Missing Values By Column')
 plt.legend(fig, ['Green: <=25%','Blue: <= 60%','Red: 60% and Above'], loc = "upper right", title = "Severity")
 ```
+[![png]({{ site.images | relative_url }}/randf1/output_26_1.png)]({{ site.images.randf1 | relative_url }}/randf/output_26_1.png)
 
 
 
-
-    <matplotlib.legend.Legend at 0x237802b5f28>
-
-
-
-
-![png](output_26_1.png)
-
-
-#### Saving the Current Dataframe and every changes that has been made so far as a feather file
-
-
+#### Tidying Up Data 
+  - Saving the Current Dataframe and every change that has been made so far as a feather file
+  - We create a folder in the current directory
 ```python
 os.makedirs("temp",exist_ok=True)
-
 ```
-
-
+- We save the file with a user defined name
 ```python
 df.to_feather("temp/data_now")
 ```
 
-#### At a later time, we simply call up the feather file and continue from previous point
-
-
+##### At a later time, we simply call up the feather file and continue from previous point
 ```python
 import feather
 df_new = feather.read_dataframe("temp/data_now")
 
 ```
-
-
 ```python
 df_summary(df_new)
 ```
@@ -1862,29 +1801,25 @@ df_new.head(5)
 
 
 
-### Preprocessing
-
-- Replace Categories with Numeric codes
-- Handle missing continuous values by filling with the Median Values 
-- Split the Target Variable from the Dataframe into a Separate variable (Y).
-
+#### Preprocessing with the **proc_df()** in ***fastai***
+- proc_df() is responsible for the following:
+  - Replace Categories with Numeric codes
+  - Imputation of missing continuous values by filling with the Median Values 
+  - Spliting the Target Variable off from the Dataframe into a Separate variable (Y).
+  - Adding a new column ***nas*** which signifies columns where missing values were imputed by the median
 
 ```python
 df_ready, y, na_vals = proc_df(df_new,"SalePrice")
 ```
-
-
 ```python
-### Notice that the target has been moved off from the df
 ### 
 display_all(df_summary(df_ready))
 ```
+Notice that the target has been moved off from the data frame as y
 
     There are 66 columns 
     There are 401125 entries in this DataFrame
     
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -2045,12 +1980,18 @@ display_all(df_summary(df_ready))
 </table>
 </div>
 
+***Now or Data set is cleaned, rid of missing values, contains numerical codings for categories, we can proceed to model bulding***
 
-### Import the picture Over-Fitting here  
-- https://datascience.stackexchange.com/questions/361/when-is-a-model-underfitted
-- Creating a Validation Set to Check **Model Overfitting**
+## .......Just Before Model Building  
+- Creating a Training set and a validation set is an extremely important step in Machine Learning tasks
+- The concept of validation set reduces the the risk of a model **overfiting or underfitting** on the training data
+   [![png]({{ site.images | relative_url }}/randf1/overfit.png)]({{ site.images.randf1 | relative_url }}/randf/overfit.png)
+- Validation set enables possibility of estimating how well the model has been trained by estimating **prediction error of the model**
+- Validation set enables one determine the need for tunning model properties where necessary
 
 
+
+- ***df_splitter()**: Takes a dataframe and splits it into specified size. One set as Trainig set, while the other is used as validation set
 ```python
 def df_splitter(df,size):
     '''
@@ -2069,27 +2010,22 @@ df_train, df_valid = df_splitter(df_ready, 20000)
 
 y_train, y_valid = df_splitter(y, 20000)
 ```
-
-
 ```python
 ### Splitted frames are as follows
 df_train.shape, df_valid.shape, y_train.shape, y_valid.shape
 ```
-
-
-
 
     ((381125, 66), (20000, 66), (381125,), (20000,))
 
 
 
 ### Building the Model
-
-
-```python
-### first, we build a function to help track the RootMeanSquaredError (RMSE) for our model
-```
-
+- ***First, we build a function to help track the RootMeanSquaredError (RMSE) for our model***
+    - ***rmse_track()*** :  Calculates the RootMeanSquaredError
+    - ***print_score()*** : 
+      - Calculates the RMSE using the rmse_track() for the training set,and validation set. 
+      - Shows the ***Mean Squared Error Score*** for training and validation sets.
+      - Shows ***oob_score*** if oob_score is set to "True"
 
 ```python
 def rmse_track(x,y): 
@@ -2110,25 +2046,18 @@ def print_score(m):
     print(res)
 ```
 
-### A base model and quick View
-
+#### Building a Base model for Quick View
+- Building a base model of only one tree, using random values and untunned parameters
 
 ```python
-### Building a base model of only one tree, using default values, untunned parameters
 base_mod = RandomForestRegressor(n_jobs=-1,n_estimators=1,bootstrap=False)
 ```
-
-
 ```python
 %time base_mod.fit(df_ready_train,y_train)
 ```
 
     Wall time: 11.1 s
     
-
-
-
-
     RandomForestRegressor(bootstrap=False, criterion='mse', max_depth=None,
                max_features='auto', max_leaf_nodes=None,
                min_impurity_decrease=0.0, min_impurity_split=None,
@@ -2136,65 +2065,51 @@ base_mod = RandomForestRegressor(n_jobs=-1,n_estimators=1,bootstrap=False)
                min_weight_fraction_leaf=0.0, n_estimators=1, n_jobs=-1,
                oob_score=False, random_state=None, verbose=0, warm_start=False)
 
-
-
-
+**A look at the RMSE scores on training set and validation set with the print_score()
+ 
 ```python
-### viewing the rsme results with the print_score function
-### we see the Rsme of 0.7 on the validation set, not exactly good 
-
 print_score(base_mod)
-
 ```
-
     [1.0983985613061447e-06, 0.36086465048321226, 0.9999999999974865, 0.7367468865904693]
     
+#### ......Bagging to the Rescue
+Bagging **(BootStrapped Aggregation)**, is a machine learning ensemble method designed to improve the stability and accuracy of machine learning algorithms, It reduces variance and helps to avoid overfitting.<br/> 
+***Random Forest*** is a bagging approach because it involves **taking random samples from the data** (bootstrapping) and using the ***insights*** from these samples to build ***numerous uncorrelated models***, The generated models are **Averaged (Regression tasks)** or **Voted (Classification task)** to obtain the optimal model. <br/> 
+*Bagging ensures each individual estimator is optimally predictive yet uncorrelated*<br/>
 
+Bagging was proposed by **Leo Breiman in 1994**. Read more [Here](https://en.wikipedia.org/wiki/Bootstrap_aggregating)
+
+
+A good Model:
+  - Predicts the taining set accurately
+  - Effective establishes the relationships that exists in Training Set
+  - Generalizes well on New Unseen Data
 
 ```python
-### To improve the RSME we create a forest using Bagging
-# Explain Bagging
-# Explain Boot strapping
-# What is a good Model
-
 bagged_mod = RandomForestRegressor(n_jobs=-1)
 bagged_mod.fit(df_ready_train, y_train)
 print_score(bagged_mod)
 ```
 
-    C:\Users\UZOMA\Anaconda3\envs\fastai\lib\site-packages\sklearn\ensemble\forest.py:246: FutureWarning: The default value of n_estimators will change from 10 in version 0.20 to 100 in 0.22.
-      "10 in version 0.20 to 100 in 0.22.", FutureWarning)
-    
-
     [0.0905261270376209, 0.2606287462554886, 0.9829267705212436, 0.8626813697498997]
     
+***Since bagging generates more than one estimator, and calculates the average to give the best model, unlike our base_model, we can see that the RSME on validation improved significantly***
+
+***The default number of estimators is 10***<br/>
+***For better insight, we plot the RSME score to show the impact of estimator(tree) increament showing to illustrate bagging***
 
 
 ```python
-### Since bagging generates more than one estimator, unlike our base_model, we can see that the RSME on validation improved significantly
-### From 0.73 to 0.86
-### The default number of estimators is 10
-### For better insight, we plot the RSME score to show the impact of estimator(tree) increament showing to illustrate bagging
 
-```
-
-
-```python
-### preds hold the prediction result for each estimator
+# preds hold the prediction result for each estimator
 preds = np.stack([tree.predict(df_ready_valid) for tree in bagged_mod.estimators_])
 
-### We take a look at predictions for the first instance, and compare the mean of predictions against the original value
+# We take a look at predictions for the first instance, and compare the mean of predictions against the original value
 preds[:,0], np.mean(preds[:,0]), y_valid[0]
 ```
-
-
-
-
     (array([11.09741, 11.03489, 11.14186, 10.98529, 11.15625, 11.01863, 10.78932, 11.03489, 11.09741, 11.03489]),
      11.039084228167859,
      11.097410021008562)
-
-
 
 
 ```python
@@ -2205,18 +2120,11 @@ plt.title('Effect of Bagging')
 plt.plot([metrics.r2_score(y_valid, np.mean(preds[:i+1], axis=0)) for i in range(10)])
 ```
 
+[![png]({{ site.images | relative_url }}/randf1/output_51_1.png)]({{ site.images.randf1 | relative_url }}/randf/output_51_1.png)
 
 
 
-    [<matplotlib.lines.Line2D at 0x23788d16be0>]
-
-
-
-
-![png](output_51_1.png)
-
-
-### Model Tunning and Hyper-Parameters
+#### Model Tunning and Hyper-Parameters
 - n_estimators
 - oob_score = (True/False) - Allows use of unselected features during individual estimator training as validation data
 - set_rf_samples (20000)

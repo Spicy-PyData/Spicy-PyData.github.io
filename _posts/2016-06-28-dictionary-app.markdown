@@ -1,9 +1,10 @@
 ---
+bg: "test.jpg"
 layout: post
 title:  "Login Script in Python"
 crawlertitle: "Dictionary Manipulation"
 summary: "A function that takes password and writes to text  file"
-date:   2018-12-06 23:09:47 +0700
+date:   2018-06-28 23:09:47 +0700
 categories: posts
 tags: 'python'
 author: Uzoma

@@ -1,5 +1,5 @@
 ---
-bg: "owl.jpg"
+bg: "rails.jpg"
 layout: page
 title: "About"
 crawlertitle: "About Me"
@@ -9,9 +9,12 @@ active: about
 ---
 <h3>About Me</h3>
 
-I'm a Master's Degree student of Business Information Systems at Mersin University Turkey, I am also a part-time ESL teacher and a linguist . 
-Most of all, I am a budding Data Scientist with major intrest in data analysis, Data Visualization, Machine learning and programming in Python.
-Most of my time is spent on completing online data science courses.
+My Name is **Uzoma Uzosike**. I am a Data scientist and Machine learning enthusiast.
+I'm a Master's Degree student of Business Information Systems at Mersin University Turkey.
+My Data major interest is in Data analysis, Data Visualization, and Programming in Python.
+Most of my time is spent on acquiring knowledge to continuously improve my skill set as a data scientist.
+I am also a part-time teacher, working as an English Language instructor for some Turkish High School Students.
+I love my life, because it's surrounded by numerous amount of unexplored data, and exploring data to derive insight is simply a breath-taking adventure. *Welcome On-board* 
 
 <h4>Curriculum Vitae</h4>Download my CV [<i>Here</i>](../cv.pdf)
 
@@ -41,3 +44,6 @@ View presentation slides [HERE](https://www.slideshare.net/secret/dCEFtRRCr8H8Co
 
 - Softwares
 [![png]({{ site.images | relative_url }}/skills/softwares.png)]({{ site.images.skills | relative_url }}/skills/softwares.png)
+
+-   ***Hobbies*** :
+[![jpg]({{ site.images | relative_url }}/hobby/kids.jpg)]({{ site.images.hobby | relative_url }}/hobby/kids.jpg)

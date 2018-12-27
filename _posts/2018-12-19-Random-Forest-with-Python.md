@@ -9,6 +9,8 @@ categories: posts
 tags: ['Machine Learning']
 author: Uzoma Uzosike
 ---
+***Objective*** : Predicting Survivors of the Titanic Tragedy
+
 ***Import Necessary Python Libraries***
 ```python
 import pandas as pd

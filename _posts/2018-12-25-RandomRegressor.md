@@ -1,5 +1,5 @@
 ---
-bg: "/randf/rf_post.jpg"
+bg: "/randf1/randf1img.jpg"
 layout: post
 title:  "RandomForest Regressor with Python"
 crawlertitle: "RandomForest"
@@ -13,7 +13,7 @@ author: Uzoma Uzosike
 
 ***Evaluation Criterion***: Root Squared Mean Error
 
-***Data Description***: Access the Data on Kaggle using this [Link](https://www.kaggle.com/c/bluebook-for-bulldozers/data) 
+***Data Description***: Access the Data on Kaggle using this [Link](https://www.kaggle.com/c/bluebook-for-bulldozers/data){:target="_blank"}
 
 ```python
 %load_ext autoreload
@@ -1984,7 +1984,7 @@ Notice that the target has been moved off from the data frame as y
 
 ## .......Just Before Model Building  
 - Creating a Training set and a validation set is an extremely important step in Machine Learning tasks
-- The concept of validation set reduces the the risk of a model **overfiting or underfitting** on the training data. Read more about [Underfitting and Overfitting HERE](https://datascience.stackexchange.com/questions/361/when-is-a-model-underfitted)
+- The concept of validation set reduces the the risk of a model **overfiting or underfitting** on the training data. Read more about [Underfitting and Overfitting HERE](https://datascience.stackexchange.com/questions/361/when-is-a-model-underfitted){:target="_blank"}
    [![png]({{ site.images | relative_url }}/randf1/overfit.png)]({{ site.images.randf1 | relative_url }}/randf/overfit.png)
 - Validation set enables possibility of estimating how well the model has been trained by estimating **prediction error of the model**
 - Validation set enables one determine the need for tunning model properties where necessary
@@ -2077,7 +2077,7 @@ Bagging **(BootStrapped Aggregation)**, is a machine learning ensemble method de
 ***Random Forest*** is a bagging approach because it involves **taking random samples from the data** (bootstrapping) and using the ***insights*** from these samples to build ***numerous uncorrelated models***, The generated models are **Averaged (Regression tasks)** or **Voted (Classification task)** to obtain the optimal model. <br/> 
 *Bagging ensures each individual estimator is optimally predictive yet uncorrelated*<br/>
 
-Bagging was proposed by **Leo Breiman in 1994**. Read more [Here](https://en.wikipedia.org/wiki/Bootstrap_aggregating)
+Bagging was proposed by **Leo Breiman in 1994**. Read more [Here](https://en.wikipedia.org/wiki/Bootstrap_aggregating){:target="_blank"}
 
 
 A good Model:
@@ -2208,7 +2208,7 @@ predictions = bagged_mod.predict(df_ready_valid)
 ```
 
 #### Grid Search
-A grid search entails an ***exhausive search for Hyper-parameter values*** by considering ***all possible combinations of parameters*** with the aim of determining the combinations that generates the most optimum results with respect to the prefered evaluation criterion.<br/>Read more on [GridSearchCV  Here](https://scikit-learn.org/stable/modules/grid_search.html)
+A grid search entails an ***exhausive search for Hyper-parameter values*** by considering ***all possible combinations of parameters*** with the aim of determining the combinations that generates the most optimum results with respect to the prefered evaluation criterion.<br/>Read more on [GridSearchCV  Here](https://scikit-learn.org/stable/modules/grid_search.html){:target="_blank"}
 
 Note ***estimator.get_params()*** : Gives names and current values for all parameters for a given estimator
 

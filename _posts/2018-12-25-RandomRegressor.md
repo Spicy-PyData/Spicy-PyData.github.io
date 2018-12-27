@@ -1984,7 +1984,7 @@ Notice that the target has been moved off from the data frame as y
 
 ## .......Just Before Model Building  
 - Creating a Training set and a validation set is an extremely important step in Machine Learning tasks
-- The concept of validation set reduces the the risk of a model **overfiting or underfitting** on the training data
+- The concept of validation set reduces the the risk of a model **overfiting or underfitting** on the training data. Read more about [Underfitting and Overfitting HERE](https://datascience.stackexchange.com/questions/361/when-is-a-model-underfitted)
    [![png]({{ site.images | relative_url }}/randf1/overfit.png)]({{ site.images.randf1 | relative_url }}/randf/overfit.png)
 - Validation set enables possibility of estimating how well the model has been trained by estimating **prediction error of the model**
 - Validation set enables one determine the need for tunning model properties where necessary
@@ -2125,14 +2125,18 @@ plt.plot([metrics.r2_score(y_valid, np.mean(preds[:i+1], axis=0)) for i in range
 
 
 #### Model Tunning and Hyper-Parameters
-- n_estimators
-- oob_score = (True/False) - Allows use of unselected features during individual estimator training as validation data
-- set_rf_samples (20000)
-       - sets a number of samples (20000) randomly selected for each estimator (tree)
+- **n_estimators** : Specifies the number of estimators/trees that consitutes the RandomForest
+- **oob_score** (True/False) - Allows use of unselected features during individual estimator training as validation data
+- **set_rf_samples()** : Sets a number of samples () randomly selected for each estimator
+- **min_samples_leaf** reduces overfitting by reducing the depth of tree
+- **set_rf_samples()** sets a number of samples to be chosen randomly from the training set for each estimator
+- ***max_features*** specifies the number of features to randomly select from at each split
 
+####  ***Comparing results on Tunned Parameters*** 
+  - ***n_estimators***
 
 ```python
-## Comparing results on different n_estimators
+
 bagged_mod = RandomForestRegressor(n_jobs=-1,n_estimators=20)
 bagged_mod.fit(df_ready_train, y_train)
 print_score(bagged_mod)
@@ -2151,32 +2155,25 @@ print_score(bagged_mod)
     [0.07835619605843071, 0.24623203453723758, 0.9872087058756192, 0.8774328916910471]
     
 
+As was illustrated by the shape of the **"Effect of Bagging"** curve above, after a certain number of n_estimators, increasing the n_estimators will not result any significant model score change
 
-```python
-## Notice from the shape of the curve that after a particular number, adding more trees isn't going to help us much
-```
-
-##### oob_score - Allows use of unselected features during individual estimator training as validation data
-#### This allows us to see whether the model is over-fitting, without needing a separate validation set.
-
+  - **oob_score** - Allows use of unselected features during individual estimator training as validation data
 
 ```python
 bagged_mod = RandomForestRegressor(n_jobs=-1,n_estimators=40,oob_score=True)
 bagged_mod.fit(df_ready_train, y_train)
 print_score(bagged_mod)
 ```
-
     [0.07828725234185964, 0.24764255861982026, 0.9872312054717943, 0.8760246343515274, 0.9085439037989442]
-    
 
-#### set_rf_samples() sets a number of samples to be chosen randomly from the training set for each estimator
-#### Increases the likelyhood of the estimators randomly sampling almost all instances
+      Notice the ***oob_score*** is given as ***0.9085439037989442*** 
 
+  - **set_rf_samples()** sets a number of samples to be chosen randomly from the training set for each estimator
+Increases the likelyhood of the estimators randomly sampling all instances during training of individual estimator
 
 ```python
 set_rf_samples(20000)
 ```
-
 
 ```python
 bagged_mod = RandomForestRegressor(n_jobs=-1,n_estimators=40)
@@ -2187,13 +2184,14 @@ print_score(bagged_mod)
     [0.22693450540905882, 0.26767819730540754, 0.8927076228293983, 0.8551525577806699]
     
 
-
 ```python
 reset_rf_samples()
 ```
 
-- min_samples_leaf reduces overfitting by reducing the depth of tree [1,3,10,25]
-- max_features specifies the number of features to randomly select from at each split [None,0.5,sqrt]
+  - ***min_samples_leaf*** reduces overfitting by reducing the depth of tree 
+      - Sample parameters : [1,3,10,25]
+  - ***max_features*** specifies the number of features to randomly select from at each split 
+      - Sample Parameters: [None,0.5,sqrt,log2]
 
 
 
@@ -2204,15 +2202,15 @@ print_score(bagged_mod)
 ```
 
     [0.1195504702760178, 0.23154810867437062, 0.9702237244699964, 0.8916154674588154, 0.9115849124625287]
-    
-
 
 ```python
 predictions = bagged_mod.predict(df_ready_valid)
 ```
 
-##### Grid Search
+#### Grid Search
+A grid search entails an ***exhausive search for Hyper-parameter values*** by considering ***all possible combinations of parameters*** with the aim of determining the combinations that generates the most optimum results with respect to the prefered evaluation criterion.<br/>Read more on [GridSearchCV  Here](https://scikit-learn.org/stable/modules/grid_search.html)
 
+Note ***estimator.get_params()*** : Gives names and current values for all parameters for a given estimator
 
 ```python
 
@@ -2237,91 +2235,56 @@ _, X_val = df_splitter(df_trn, 70000)
 _, y_val= df_splitter(y_trn, 70000)
 ```
 
-
 ```python
-### Build an object of the RandomForestRegressor for the grid search
+## Build an object of the RandomForestRegressor for the grid search
 grid_mod = RandomForestRegressor(n_jobs=-1)
-```
 
-
-```python
 ## Start the grid search
 grid= GridSearchCV(grid_mod,params)
 
-```
-
-
-```python
 ## Fit the grid object with the train data
 grid.fit(X_train,y_train)
+
 ```
 
-
+***A Look at the best combination of Parameters after a Grid Search***
 ```python
-Best_val = grid.best_estimator_
+grid.best_estimator_
 ```
-
-
-```python
-Best_val
-
-```
-
-
-
 
     RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
-               max_features='auto', max_leaf_nodes=None,
+               max_features=0.5, max_leaf_nodes=None,
                min_impurity_decrease=0.0, min_impurity_split=None,
                min_samples_leaf=3, min_samples_split=2,
-               min_weight_fraction_leaf=0.0, n_estimators=14, n_jobs=-1,
+               min_weight_fraction_leaf=0.0, n_estimators=20, n_jobs=-1,
                oob_score='True', random_state=None, verbose=0,
                warm_start=False)
 
 
-
+***Trying out the GridResults on Training and Validation Set***
 
 ```python
-##### view grid results on validation set
+
 bagged_mod = RandomForestRegressor(n_jobs=-1,n_estimators=20,min_samples_leaf=3,oob_score=True,min_samples_split=2,
                                    max_features=0.5)
 bagged_mod.fit(df_train, y_train)
 print_score(bagged_mod)
 
 ```
-
-    C:\Users\UZOMA\Anaconda3\envs\fastai\lib\site-packages\sklearn\ensemble\forest.py:732: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable oob estimates.
-      warn("Some inputs do not have OOB scores. "
-    
-
     [0.12208999839611034, 0.23661771975582993, 0.9689452546148812, 0.8868174791256095, 0.8851880113187941]
     
-
 
 ```python
 predictions = bagged_mod.predict(df_ready_valid)
 ```
-
-
+#### Visual Comparism Between Original Values and Predicted Results from Model
+- A distribution plot showing original values versus predicted values
+  - Red line represents original Values
+  - Blue line represents predicted values
 ```python
-### Visualiziation
 plt.figure(figsize=(16,8))
 plt.title('Original Values Versus Predicted Values')
 ax1 = sns.distplot(y_valid,hist=False,color="r",label="Original Target Values")
 sns.distplot(predictions,hist=False,color="b",label="Predicted Values",ax=ax1)
 ```
-
-    C:\Users\UZOMA\Anaconda3\envs\fastai\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
-      return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
-    
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x23790139438>
-
-
-
-
-![png](output_76_2.png)
-
+[![png]({{ site.images | relative_url }}/randf1/output_76_2.png)]({{ site.images.randf1 | relative_url }}/randf/output_76_2.png)

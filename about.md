@@ -39,3 +39,5 @@ View presentation slides [HERE](https://www.slideshare.net/secret/dCEFtRRCr8H8Co
 - Data Visualizations Tools:
 [![png]({{ site.images | relative_url }}/skills/visuals.png)]({{ site.images.skills | relative_url }}/skills/visuals.png)
 
+- Softwares
+[![png]({{ site.images | relative_url }}/skills/softwares.png)]({{ site.images.skills | relative_url }}/skills/softwares.png)

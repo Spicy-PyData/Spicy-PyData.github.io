@@ -1,9 +1,9 @@
 ---
 bg: "/randf/rf_post.jpg"
 layout: post
-title:  "RandomForestClassifier with Python"
+title:  "RandomForest Classifier with Python"
 crawlertitle: "RandomForest"
-summary: "RandomForestClassifier with Python"
+summary: "RandomForest Classifier with Python"
 date:   2018-12-19 02:00:47 +0700
 categories: posts
 tags: ['Machine Learning']

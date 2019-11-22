@@ -4,7 +4,7 @@ layout: post
 title:  "Sentiment Analysis with Python- BI Strategy Project"
 crawlertitle: "SentimentAnalysis"
 summary: "Class Group Project with Python"
-date:   2019-11-22 02:00:47 +0700
+date:   2019-11-21 02:00:47 +0700
 categories: posts
 tags: ['Machine Learning']
 author: Uzoma Uzosike

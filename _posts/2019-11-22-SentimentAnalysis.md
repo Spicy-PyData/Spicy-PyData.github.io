@@ -11,4 +11,4 @@ author: Uzoma Uzosike
 ---
 ***Objective***: Sentimen tAnalysis Using Natural Language Processing
 
-<h4>BI Strategy Project</h4> View Project Here [<i>Acess Project</i>](../BIStrategy.ipynb)
+<h4>BI Strategy Project</h4> View Project Here [<i>Access Project</i>](../bistrategy.ipynb)

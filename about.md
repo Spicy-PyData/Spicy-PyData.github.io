@@ -10,11 +10,11 @@ active: about
 <h3>About Me</h3>
 
 My Name is **Uzoma Uzosike**. I am a Data scientist and Machine learning enthusiast.
-I'm a Master's Degree student of Business Information Systems at Mersin University Turkey.
-My Data major interest is in Data analysis, Data Visualization, and Programming in Python.
-Most of my time is spent on acquiring knowledge to continuously improve my skill set as a data scientist.
-I am also a part-time teacher, working as an English Language instructor for some Turkish High School Students.
-I love my life, because it's surrounded by numerous amount of unexplored data, and exploring data to derive insight is simply a breath-taking adventure. *Welcome On-board* 
+I have completed Master's Degree in Business Information Systems at Mersin University Turkey, and I am currently enrolled in a second Master's Degree in Business Intelligence and Business Analytics at the University of Applied Sciences, Neu-Ulm, Germany.
+My major field of interest is Data Analysis, Data Visualization, Text Analytics and Programming in Python.
+Most of my time is spent on acquiring knowledge to continuously improve my skill-set as a data scientist.
+My spare time is spent working as part-time teacher English Language instructor at an English Language Institute for Turkish High School Students.
+I love my life because in live in the age of data, it is my responsibility to mine this gigantic volume of unexplored data, exploring the data to derive insight is simply a breath-taking adventure. *Welcome On-board* 
 
 <h4>Curriculum Vitae</h4>Download my CV [<i>Here</i>](../cv.pdf)
 
